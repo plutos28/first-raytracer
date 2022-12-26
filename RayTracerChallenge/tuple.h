@@ -51,6 +51,14 @@ public:
     static bool isPoint(TupleData a) {
         return a.w == 1.0;
     }
+
+    static bool Equal(TupleData t1, TupleData t2) {
+        if (Operations::Equal(t1.x, t2.x) && Operations::Equal(t1.y, t2.y)
+            && Operations::Equal(t1.z, t2.z) && Operations::Equal(t1.w, t2.w)) {
+            return true;
+        }
+        return false;
+    }
 };
 
 class Point {
@@ -110,7 +118,7 @@ void testTupleisVector() {
 }
 
 void testPointCreatesTupleWith1() {
-    // Tests that creating a Point is equivalent to creating a Tuple with w of 1.0
+    // Test that creating a Point is equivalent to creating a Tuple with w of 1.0
     PointData p(4, -4, 3);
     TupleData t(4, -4, 3, 1);
     bool testPassed = false;
@@ -128,7 +136,7 @@ void testPointCreatesTupleWith1() {
 }
 
 void testVectorCreatesTupleWith0() {
-    // Tests that creating a Point is equivalent to creating a Tuple with w of 1.0
+    // Test that creating a Vector is equivalent to creating a Tuple with w of 0.0
     VectorData v(4, -4, 3);
     TupleData t(4, -4, 3, 0);
     bool testPassed = false;
@@ -145,10 +153,30 @@ void testVectorCreatesTupleWith0() {
     }
 }
 
+void testTuplesEqual() {
+    // Test that you can check the equivalence of two tuples
+    TupleData t1(4, -4, 3, 1);
+    TupleData t2(4, -4, 3, 1);
+    bool testPassed = false;
+
+    if (Tuple::Equal(t1, t2)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        printf("Test Passed: testTuplesEqual\n");
+    }
+    else {
+        printf("Test Failed: testTuplesEqual\n");
+    }
+}
+
+
 
 void run_tuple_tests() {
     testTupleisPoint();
     testTupleisVector();
     testPointCreatesTupleWith1();
     testVectorCreatesTupleWith0();
+    testTuplesEqual();
 }
