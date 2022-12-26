@@ -1,5 +1,7 @@
 #include <cstdio>
+#include <cstdlib>
 
+#include "operations.h"
 #include "tuple.h"
 
 void run_tests();

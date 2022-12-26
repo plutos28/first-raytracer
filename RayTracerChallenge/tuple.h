@@ -23,18 +23,43 @@ public:
 };
 
 
-void testTupleisPoint() {
-    TupleData a(4.3, -4.2, 3, 1.0);
 
-    if (a.w == 1.0) {
-        printf("Test Passed: testTupleisPoint");
+
+void testTupleisPoint() {
+    TupleData a(4.3, -4.2, 3.1, 1.0);
+    bool testPassed = false;
+
+    if (Operations::equal(a.x, 4.3) && Operations::equal(a.y, -4.2) 
+        && Operations::equal(a.z, 3.1) && Operations::equal(a.w, 1.0)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        printf("Test Passed: testTupleisPoint\n");
     }
     else {
-        printf("Test Failed: testTupleisPoint");
+        printf("Test Failed: testTupleisPoint\n");
     }
-    
 }
+
+void testTupleisVector() {
+    TupleData a(4.3, -4.2, 3.1, 0.0);
+    bool testPassed = false;
+
+    if (a.x == 4.3) {
+
+    }
+
+    if (testPassed) {
+        printf("Test Passed: testTupleisVector\n");
+    }
+    else {
+        printf("Test Failed: testTupleisVector\n");
+    }
+}
+
 
 void run_tuple_tests() {
     testTupleisPoint();
+    testTupleisVector();
 }
