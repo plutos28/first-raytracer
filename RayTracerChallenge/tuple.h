@@ -46,8 +46,9 @@ void testTupleisVector() {
     TupleData a(4.3, -4.2, 3.1, 0.0);
     bool testPassed = false;
 
-    if (a.x == 4.3) {
-
+    if (Operations::equal(a.x, 4.3) && Operations::equal(a.y, -4.2)
+        && Operations::equal(a.z, 3.1) && Operations::equal(a.w, 0.0)) {
+        testPassed = true;
     }
 
     if (testPassed) {
