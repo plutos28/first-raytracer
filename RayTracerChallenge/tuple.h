@@ -7,7 +7,7 @@ public:
     double z;
     double w;
 
-    TupleData(double x1, double y1, double z1, double w1) {
+    TupleData(double x1 = 0, double y1 = 0, double z1 = 0, double w1 = 0) {
         x = x1;
         y = y1;
         z = z1;
@@ -22,7 +22,7 @@ public:
     double z;
     const double w = 1;
 
-    PointData(double x1, double y1, double z1) {
+    PointData(double x1 = 0, double y1 = 0, double z1 = 0) {
         x = x1;
         y = y1;
         z = z1;
@@ -36,7 +36,7 @@ public:
     double z;
     const double w = 0;
 
-    VectorData(double x1, double y1, double z1) {
+    VectorData(double x1 = 0, double y1 = 0, double z1 = 0) {
         x = x1;
         y = y1;
         z = z1;
@@ -56,6 +56,12 @@ public:
             return true;
         }
         return false;
+    }
+
+    static TupleData Add(TupleData t1, TupleData t2) {
+        TupleData result(0, 0, 0, 0);
+
+        return result;
     }
 };
 
@@ -186,6 +192,28 @@ void testTuplesEqual() {
     }
 }
 
+void testAddTuples() {
+    // Test that you acn add two tuples 
+    TupleData t1(3, -2, 5, 1); // a point
+    TupleData t2(-2, 3, 1, 0); // a vector
+    TupleData expectedTuple(1, 1, 6, 1);
+    bool testPassed = false;
+
+    TupleData resultTuple = Tuple::Add(t1, t2); // return a new tuple
+
+    if(Tuple::Equal(resultTuple, expectedTuple)) {
+        testPassed = true;
+    }
+
+
+    if (testPassed) {
+        std::cout << "Test Passed: testAddTuples\n";
+    }
+    else {
+        std::cout << "Test Failed: testAddTuples\n";
+    }
+}
+
 
 
 void run_tuple_tests() {
@@ -194,4 +222,5 @@ void run_tuple_tests() {
     testPointCreatesTupleWith1();
     testVectorCreatesTupleWith0();
     testTuplesEqual();
+    testAddTuples();
 }

@@ -7,9 +7,8 @@ void run_tests();
 
 int main()
 {
-    PointData v1(1, 1, 1);
-    PointData v2(1, 1, 1);
-    std::cout << Point::Equal(v1, v2) << "\n";
+    TupleData t3;
+    std::cout << t3.w;
     // Run all the tests
     run_tests();
 
