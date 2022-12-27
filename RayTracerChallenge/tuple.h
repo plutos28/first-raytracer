@@ -198,7 +198,7 @@ void testTuplesEqual() {
 }
 
 void testAddTuples() {
-    // Test that you acn add two tuples 
+    // Test that you can add two tuples 
     TupleData t1(3, -2, 5, 1); // a point
     TupleData t2(-2, 3, 1, 0); // a vector
     TupleData expectedTuple(1, 1, 6, 1);
@@ -219,6 +219,28 @@ void testAddTuples() {
     }
 }
 
+void testSubtractTuples() {
+    // Test that you can add two tuples 
+    TupleData t1(3, -2, 5, 1); // a point
+    TupleData t2(-2, 3, 1, 0); // a point
+    TupleData expectedTuple(1, 1, 6, 1);
+    bool testPassed = false;
+
+    TupleData resultTuple = Tuple::Subtract(t1, t2); // return a new tuple
+
+    if(Tuple::Equal(resultTuple, expectedTuple)) {
+        testPassed = true;
+    }
+
+
+    if (testPassed) {
+        std::cout << "Test Passed: testSubtractTuples\n";
+    }
+    else {
+        std::cout << "Test Failed: testSubtractTuples\n";
+    }
+}
+
 
 
 void run_tuple_tests() {
@@ -228,4 +250,5 @@ void run_tuple_tests() {
     testVectorCreatesTupleWith0();
     testTuplesEqual();
     testAddTuples();
+    testSubtractTuples();
 }
