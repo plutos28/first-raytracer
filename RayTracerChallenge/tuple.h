@@ -20,13 +20,12 @@ public:
     double x;
     double y;
     double z;
-    double w;
+    const double w = 1;
 
     PointData(double x1, double y1, double z1) {
         x = x1;
         y = y1;
         z = z1;
-        w = 1;
     }
 };
 
@@ -35,13 +34,12 @@ public:
     double x;
     double y;
     double z;
-    double w;
+    const double w = 0;
 
     VectorData(double x1, double y1, double z1) {
         x = x1;
         y = y1;
         z = z1;
-        w = 0;
     }
 };
 
