@@ -61,6 +61,11 @@ public:
     static TupleData Add(TupleData t1, TupleData t2) {
         TupleData result(0, 0, 0, 0);
 
+        result.x = t1.x + t2.x;
+        result.y = t1.y + t2.y;
+        result.z = t1.z + t2.z;
+        result.w = t1.w + t2.w;
+
         return result;
     }
 };
