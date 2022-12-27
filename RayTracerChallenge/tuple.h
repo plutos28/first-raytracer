@@ -15,6 +15,12 @@ public:
     }
 };
 
+// be able to std::cout TupleData like this: (x, y, z, w)
+std::ostream& operator<<(std::ostream &s, const TupleData &t) {
+    return s << typeid(t).name() << "(" << t.x << ", " << t.y << ", " << t.z << ", " << t.w << ")";
+}
+ 
+
 class PointData : public TupleData {
 public:
     PointData(double x1 = 0, double y1 = 0, double z1 = 0) {
@@ -63,10 +69,20 @@ public:
 
         return result;
     }
+
+    
 };
 
 class Point : public Tuple {
 public:
+    static VectorData Subtract(PointData p1, PointData t2) {
+        // Subtracting two points
+        VectorData resultVector;
+        resultVector.x = p1.x - t2.x;
+        resultVector.y = p1.y - t2.y;
+        resultVector.z = p1.z - t2.z;
+        return resultVector;
+    }
 };
 
 class Vector : public Tuple {
@@ -175,35 +191,40 @@ void testAddTuples() {
 
     if (testPassed) {
         std::cout << "Test Passed: testAddTuples\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
     }
     else {
         std::cout << "Test Failed: testAddTuples\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
     }
 }
 
-// void testSubtractTuples() {
-//     // Test that you can add two tuples 
-//     TupleData t1(3, -2, 5, 1); // a point
-//     TupleData t2(-2, 3, 1, 0); // a point
-//     TupleData expectedTuple(1, 1, 6, 1);
-//     bool testPassed = false;
+void testSubtractTwoPoints() {
+    // Test that you can subtract two points 
+    PointData p1(3, 2, 1); // a point
+    PointData p2(5, 6, 7); // a point
+    VectorData expectedVector(-2, -4, -6);
+    bool testPassed = false;
 
-//     TupleData resultTuple = Tuple::Subtract(t1, t2); // return a new tuple
+    VectorData resultVector = Point::Subtract(p1, p2); 
 
-//     if(Tuple::Equal(resultTuple, expectedTuple)) {
-//         testPassed = true;
-//     }
+    if(Vector::Equal(resultVector, expectedVector)) {
+        testPassed = true;
+    }
 
-
-//     if (testPassed) {
-//         std::cout << "Test Passed: testSubtractTuples\n";
-//     }
-//     else {
-//         std::cout << "Test Failed: testSubtractTuples\n";
-//     }
-// }
-
-
+    if (testPassed) {
+        std::cout << "Test Passed: testSubtractTwoPoints\n";
+        std::cout << "\tResult: " << resultVector << "\n";
+        std::cout << "\tExpected: " << expectedVector << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testSubtractTwoPoints\n";
+        std::cout << "\tResult: " << resultVector << "\n";
+        std::cout << "\tExpected: " << expectedVector << "\n";
+    }
+}
 
 void run_tuple_tests() {
     testTupleisPoint();
@@ -212,5 +233,5 @@ void run_tuple_tests() {
     testVectorCreatesTupleWith0();
     testTuplesEqual();
     testAddTuples();
-    // testSubtractTuples();
+    testSubtractTwoPoints();
 }
