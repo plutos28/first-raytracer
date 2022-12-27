@@ -68,6 +68,14 @@ public:
         }
         return false;
     }
+
+    static bool Equal(PointData p1, PointData p2) {
+        if (Operations::Equal(p1.x, p2.x) && Operations::Equal(p1.y, p2.y)
+            && Operations::Equal(p1.z, p2.z)) {
+            return true;
+        }
+        return false;
+    }
 };
 
 class Vector {
@@ -75,6 +83,15 @@ public:
     static bool EqualsTuple(VectorData v, TupleData t) {
         if (Operations::Equal(v.x, t.x) && Operations::Equal(v.y, t.y)
             && Operations::Equal(v.z, t.z) && Operations::Equal(v.w, t.w)) {
+            return true;
+        }
+        return false;
+    }
+
+    
+    static bool Equal(VectorData v1, VectorData v2) {
+        if (Operations::Equal(v1.x, v2.x) && Operations::Equal(v1.y, v2.y)
+            && Operations::Equal(v1.z, v2.z)) {
             return true;
         }
         return false;
@@ -91,10 +108,10 @@ void testTupleisPoint() {
     }
 
     if (testPassed) {
-        printf("Test Passed: testTupleisPoint\n");
+        std::cout << "Test Passed: testTupleisPoint\n";
     }
     else {
-        printf("Test Failed: testTupleisPoint\n");
+        std::cout << "Test Failed: testTupleisPoint\n";
     }
 }
 
@@ -108,10 +125,10 @@ void testTupleisVector() {
     }
 
     if (testPassed) {
-        printf("Test Passed: testTupleisVector\n");
+        std::cout << "Test Passed: testTupleisVector\n";
     }
     else {
-        printf("Test Failed: testTupleisVector\n");
+        std::cout << "Test Failed: testTupleisVector\n";
     }
 }
 
@@ -126,10 +143,10 @@ void testPointCreatesTupleWith1() {
     }
 
     if (testPassed) {
-        printf("Test Passed: testPointCreatesTupleWith1\n");
+        std::cout << "Test Passed: testPointCreatesTupleWith1\n";
     }
     else {
-        printf("Test Failed: testPointCreatesTupleWith1\n");
+        std::cout << "Test Failed: testPointCreatesTupleWith1\n";
     }
 }
 
@@ -144,10 +161,10 @@ void testVectorCreatesTupleWith0() {
     }
 
     if (testPassed) {
-        printf("Test Passed: testVectorCreatesTupleWith0\n");
+        std::cout << "Test Passed: testVectorCreatesTupleWith0\n";
     }
     else {
-        printf("Test Failed: testVectorCreatesTupleWith0\n");
+        std::cout << "Test Failed: testVectorCreatesTupleWith0\n";
     }
 }
 
@@ -162,10 +179,10 @@ void testTuplesEqual() {
     }
 
     if (testPassed) {
-        printf("Test Passed: testTuplesEqual\n");
+        std::cout << "Test Passed: testTuplesEqual\n";
     }
     else {
-        printf("Test Failed: testTuplesEqual\n");
+        std::cout << "Test Failed: testTuplesEqual\n";
     }
 }
 
