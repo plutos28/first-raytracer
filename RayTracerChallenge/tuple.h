@@ -75,7 +75,7 @@ public:
 
 class Point : public Tuple {
 public:
-    static VectorData Subtract(PointData p1, PointData t2) {
+    static VectorData SubtractPoint(PointData p1, PointData t2) {
         // Subtracting two points
         VectorData resultVector;
         resultVector.x = p1.x - t2.x;
@@ -83,6 +83,16 @@ public:
         resultVector.z = p1.z - t2.z;
         return resultVector;
     }
+
+    static PointData SubtractVector(PointData p1, VectorData v1) {
+        // Subtracting two points
+        PointData resultPoint;
+        resultPoint.x = p1.x - v1.x;
+        resultPoint.y = p1.y - v1.y;
+        resultPoint.z = p1.z - v1.z;
+        return resultPoint;
+    }
+
 };
 
 class Vector : public Tuple {
@@ -208,7 +218,7 @@ void testSubtractTwoPoints() {
     VectorData expectedVector(-2, -4, -6);
     bool testPassed = false;
 
-    VectorData resultVector = Point::Subtract(p1, p2); 
+    VectorData resultVector = Point::SubtractPoint(p1, p2); 
 
     if(Vector::Equal(resultVector, expectedVector)) {
         testPassed = true;
@@ -226,6 +236,31 @@ void testSubtractTwoPoints() {
     }
 }
 
+void testSubtractVectorFromPoint() {
+    // Test that you can subtract a vector from a point(p - v) 
+    PointData p1(3, 2, 1); 
+    VectorData v1(5, 6, 7); 
+    PointData expectedPoint(-2, -4, -6);
+    bool testPassed = false;
+
+    PointData resultPoint = Point::SubtractVector(p1, v1); 
+
+    if(Vector::Equal(resultPoint, expectedPoint)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        std::cout << "Test Passed: testSubtractVectorFromPoint\n";
+        std::cout << "\tResult: " << resultPoint << "\n";
+        std::cout << "\tExpected: " << expectedPoint << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testSubtractVectorFromPoint\n";
+        std::cout << "\tResult: " << resultPoint << "\n";
+        std::cout << "\tExpected: " << expectedPoint << "\n";
+    }
+}
+
 void run_tuple_tests() {
     testTupleisPoint();
     testTupleisVector();
@@ -234,4 +269,5 @@ void run_tuple_tests() {
     testTuplesEqual();
     testAddTuples();
     testSubtractTwoPoints();
+    testSubtractVectorFromPoint();
 }
