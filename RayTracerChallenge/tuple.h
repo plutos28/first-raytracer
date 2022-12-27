@@ -76,7 +76,7 @@ public:
 class Point : public Tuple {
 public:
     static VectorData SubtractPoint(PointData p1, PointData t2) {
-        // Subtracting two points
+        // Subtracting two points(p - p = v)
         VectorData resultVector;
         resultVector.x = p1.x - t2.x;
         resultVector.y = p1.y - t2.y;
@@ -85,7 +85,7 @@ public:
     }
 
     static PointData SubtractVector(PointData p1, VectorData v1) {
-        // Subtracting two points
+        // Subtracting vector from point(p - v = p)
         PointData resultPoint;
         resultPoint.x = p1.x - v1.x;
         resultPoint.y = p1.y - v1.y;
@@ -97,6 +97,14 @@ public:
 
 class Vector : public Tuple {
 public:
+    static VectorData SubtractVector(VectorData v1, VectorData v2) {
+        // Subtracting two vectors(v - v = v)
+        VectorData resultVector;
+        resultVector.x = v1.x - v2.x;
+        resultVector.y = v1.y - v2.y;
+        resultVector.z = v1.z - v2.z;
+        return resultVector;
+    }
 };
 
 void testTupleisPoint() {
@@ -212,7 +220,7 @@ void testAddTuples() {
 }
 
 void testSubtractTwoPoints() {
-    // Test that you can subtract two points 
+    // Test that you can subtract two points(p - p = v)
     PointData p1(3, 2, 1); // a point
     PointData p2(5, 6, 7); // a point
     VectorData expectedVector(-2, -4, -6);
@@ -237,7 +245,7 @@ void testSubtractTwoPoints() {
 }
 
 void testSubtractVectorFromPoint() {
-    // Test that you can subtract a vector from a point(p - v) 
+    // Test that you can subtract a vector from a point(p - v = p) 
     PointData p1(3, 2, 1); 
     VectorData v1(5, 6, 7); 
     PointData expectedPoint(-2, -4, -6);
@@ -245,7 +253,7 @@ void testSubtractVectorFromPoint() {
 
     PointData resultPoint = Point::SubtractVector(p1, v1); 
 
-    if(Vector::Equal(resultPoint, expectedPoint)) {
+    if(Point::Equal(resultPoint, expectedPoint)) {
         testPassed = true;
     }
 
@@ -261,6 +269,33 @@ void testSubtractVectorFromPoint() {
     }
 }
 
+void testSubtractTwoVectors() {
+    // Test that you can subtract two vectors(v - v = v) 
+    VectorData v1(3, 2, 1); 
+    VectorData v2(5, 6, 7); 
+    VectorData expectedVector(-2, -4, -6);
+    bool testPassed = false;
+
+    VectorData resultVector = Vector::SubtractVector(v1, v2); 
+
+    if(Vector::Equal(resultVector, expectedVector)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        std::cout << "Test Passed: testSubtractTwoVectors\n";
+        std::cout << "\tResult: " << resultVector << "\n";
+        std::cout << "\tExpected: " << expectedVector << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testSubtractTwoVectors\n";
+        std::cout << "\tResult: " << resultVector << "\n";
+        std::cout << "\tExpected: " << expectedVector << "\n";
+    }
+}
+
+
+
 void run_tuple_tests() {
     testTupleisPoint();
     testTupleisVector();
@@ -270,4 +305,5 @@ void run_tuple_tests() {
     testAddTuples();
     testSubtractTwoPoints();
     testSubtractVectorFromPoint();
+    testSubtractTwoVectors();
 }
