@@ -31,6 +31,11 @@ public:
     }
 };
 
+// be able to std::cout PointData like this: (x, y, z, w)
+std::ostream& operator<<(std::ostream& s, const PointData& t) {
+    return s << typeid(t).name() << "(" << t.x << ", " << t.y << ", " << t.z << ", " << t.w << ")";
+}
+
 class VectorData : public TupleData {
 public:
     VectorData(double x1 = 0, double y1 = 0, double z1 = 0) {
@@ -41,25 +46,29 @@ public:
     }
 };
 
+// be able to std::cout VectorData like this: (x, y, z, w)
+std::ostream& operator<<(std::ostream& s, const VectorData& t) {
+    return s << typeid(t).name() << "(" << t.x << ", " << t.y << ", " << t.z << ", " << t.w << ")";
+}
 
 class Tuple {
 public:
-    static bool IsPoint(TupleData a) {
+    static bool isPoint(TupleData a) {
        return Operations::Equal(a.x, 4.3) && Operations::Equal(a.y, -4.2)
             && Operations::Equal(a.z, 3.1) && Operations::Equal(a.w, 1.0);
     }
 
-    static bool IsVector(TupleData a) {
+    static bool isVector(TupleData a) {
         return Operations::Equal(a.x, 4.3) && Operations::Equal(a.y, -4.2)
             && Operations::Equal(a.z, 3.1) && Operations::Equal(a.w, 0.0);
     }
 
-    static bool Equal(TupleData t1, TupleData t2) {
+    static bool equal(TupleData t1, TupleData t2) {
         return Operations::Equal(t1.x, t2.x) && Operations::Equal(t1.y, t2.y)
             && Operations::Equal(t1.z, t2.z) && Operations::Equal(t1.w, t2.w);
     }
 
-    static TupleData Add(TupleData t1, TupleData t2) {
+    static TupleData add(TupleData t1, TupleData t2) {
         TupleData result(0, 0, 0, 0);
 
         result.x = t1.x + t2.x;
@@ -70,12 +79,27 @@ public:
         return result;
     }
 
-    
+    static TupleData subtract(TupleData t1, TupleData t2) {
+        TupleData result(0, 0, 0, 0);
+
+        result.x = t1.x - t2.x;
+        result.y = t1.y - t2.y;
+        result.z = t1.z - t2.z;
+        result.w = t1.w - t2.w;
+
+        return result;
+    }
+
+    static TupleData negate(TupleData t1) {
+        TupleData zero(0, 0, 0, 0); 
+        return Tuple::subtract(zero, t1);
+    }
+
 };
 
 class Point : public Tuple {
 public:
-    static VectorData SubtractPoint(PointData p1, PointData t2) {
+    static VectorData subtractPoint(PointData p1, PointData t2) {
         // Subtracting two points(p - p = v)
         VectorData resultVector;
         resultVector.x = p1.x - t2.x;
@@ -84,7 +108,7 @@ public:
         return resultVector;
     }
 
-    static PointData SubtractVector(PointData p1, VectorData v1) {
+    static PointData subtractVector(PointData p1, VectorData v1) {
         // Subtracting vector from point(p - v = p)
         PointData resultPoint;
         resultPoint.x = p1.x - v1.x;
@@ -97,7 +121,7 @@ public:
 
 class Vector : public Tuple {
 public:
-    static VectorData SubtractVector(VectorData v1, VectorData v2) {
+    static VectorData subtractVector(VectorData v1, VectorData v2) {
         // Subtracting two vectors(v - v = v)
         VectorData resultVector;
         resultVector.x = v1.x - v2.x;
@@ -105,13 +129,18 @@ public:
         resultVector.z = v1.z - v2.z;
         return resultVector;
     }
+
+    static VectorData negate(VectorData v1) {
+        VectorData zero(0, 0, 0); 
+        return Vector::subtractVector(zero, v1);
+    }
 };
 
 void testTupleisPoint() {
     TupleData a(4.3, -4.2, 3.1, 1.0);
     bool testPassed = false;
 
-    if (Tuple::IsPoint(a)) {
+    if (Tuple::isPoint(a)) {
         testPassed = true;
     }
 
@@ -127,7 +156,7 @@ void testTupleisVector() {
     TupleData a(4.3, -4.2, 3.1, 0.0);
     bool testPassed = false;
 
-    if (Tuple::IsVector(a)) {
+    if (Tuple::isVector(a)) {
         testPassed = true;
     }
 
@@ -145,7 +174,7 @@ void testPointCreatesTupleWith1() {
     TupleData t(4, -4, 3, 1);
     bool testPassed = false;
 
-    if (Point::Equal(p, t)) {
+    if (Point::equal(p, t)) {
         testPassed = true;
     }
 
@@ -163,7 +192,7 @@ void testVectorCreatesTupleWith0() {
     TupleData t(4, -4, 3, 0);
     bool testPassed = false;
 
-    if (Vector::Equal(v, t)) {
+    if (Vector::equal(v, t)) {
         testPassed = true;
     }
 
@@ -181,7 +210,7 @@ void testTuplesEqual() {
     TupleData t2(4, -4, 3, 1);
     bool testPassed = false;
 
-    if (Tuple::Equal(t1, t2)) {
+    if (Tuple::equal(t1, t2)) {
         testPassed = true;
     }
 
@@ -200,9 +229,9 @@ void testAddTuples() {
     TupleData expectedTuple(1, 1, 6, 1);
     bool testPassed = false;
 
-    TupleData resultTuple = Tuple::Add(t1, t2); // return a new tuple
+    TupleData resultTuple = Tuple::add(t1, t2); // return a new tuple
 
-    if(Tuple::Equal(resultTuple, expectedTuple)) {
+    if(Tuple::equal(resultTuple, expectedTuple)) {
         testPassed = true;
     }
 
@@ -226,9 +255,9 @@ void testSubtractTwoPoints() {
     VectorData expectedVector(-2, -4, -6);
     bool testPassed = false;
 
-    VectorData resultVector = Point::SubtractPoint(p1, p2); 
+    VectorData resultVector = Point::subtractPoint(p1, p2); 
 
-    if(Vector::Equal(resultVector, expectedVector)) {
+    if(Vector::equal(resultVector, expectedVector)) {
         testPassed = true;
     }
 
@@ -251,9 +280,9 @@ void testSubtractVectorFromPoint() {
     PointData expectedPoint(-2, -4, -6);
     bool testPassed = false;
 
-    PointData resultPoint = Point::SubtractVector(p1, v1); 
+    PointData resultPoint = Point::subtractVector(p1, v1); 
 
-    if(Point::Equal(resultPoint, expectedPoint)) {
+    if(Point::equal(resultPoint, expectedPoint)) {
         testPassed = true;
     }
 
@@ -276,9 +305,9 @@ void testSubtractTwoVectors() {
     VectorData expectedVector(-2, -4, -6);
     bool testPassed = false;
 
-    VectorData resultVector = Vector::SubtractVector(v1, v2); 
+    VectorData resultVector = Vector::subtractVector(v1, v2); 
 
-    if(Vector::Equal(resultVector, expectedVector)) {
+    if(Vector::equal(resultVector, expectedVector)) {
         testPassed = true;
     }
 
@@ -294,6 +323,53 @@ void testSubtractTwoVectors() {
     }
 }
 
+void testNegateVector() {
+    // Test that you can negate vector 
+    VectorData v(1, -2, 3); 
+    VectorData expectedVector(-1, 2, -3);
+    bool testPassed = false;
+
+    VectorData resultVector = Vector::negate(v);
+
+    if(Vector::equal(resultVector, expectedVector)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        std::cout << "Test Passed: testNegateVector\n";
+        std::cout << "\tResult: " << resultVector << "\n";
+        std::cout << "\tExpected: " << expectedVector << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testNegateVector\n";
+        std::cout << "\tResult: " << resultVector << "\n";
+        std::cout << "\tExpected: " << expectedVector << "\n";
+    }
+}
+
+void testNegateTuple() {
+    // Test that you can negate tuple
+    TupleData t(1, -2, 3); 
+    TupleData expectedTuple(-1, 2, -3);
+    bool testPassed = false;
+
+    TupleData resultTuple = Tuple::negate(t); 
+
+    if(Tuple::equal(resultTuple, expectedTuple)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        std::cout << "Test Passed: testNegateTuple\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testNegateTuple\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+}
 
 
 void run_tuple_tests() {
@@ -306,4 +382,6 @@ void run_tuple_tests() {
     testSubtractTwoPoints();
     testSubtractVectorFromPoint();
     testSubtractTwoVectors();
+    testNegateVector();
+    testNegateTuple();
 }
