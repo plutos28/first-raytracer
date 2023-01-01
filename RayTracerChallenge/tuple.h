@@ -156,6 +156,16 @@ public:
     static double magnitude(VectorData v1) {
         return sqrt(pow(v1.x, 2) + pow(v1.y, 2) + pow(v1.z, 2) + pow(v1.w, 2));
     }
+
+    static VectorData normalize(VectorData v1) {
+        double m = Vector::magnitude(v1);
+        v1.x /= m;
+        v1.y /= m;
+        v1.z /= m;
+        v1.w /= m;
+
+        return v1;
+    }
 };
 
 void testTupleisPoint() {
@@ -496,6 +506,60 @@ void testMagnitudesOfVectors() {
     }
 }
 
+void testNormalizeVector() {
+    bool testPassed = false;
+    VectorData testVectors[] = {
+        VectorData(4, 0, 0),
+        VectorData(1, 2, 3),
+    };
+    VectorData expectedVectors[] = {
+        VectorData(1, 0, 0),
+        VectorData(0.26726, 0.53452, 0.80178),
+    };
+
+    for(int i=0; i < sizeof(testVectors) / sizeof(VectorData); i++) {
+        if(Vector::equal(Vector::normalize(testVectors[i]), expectedVectors[i])) {
+            testPassed = true;
+        } else {
+            testPassed = false;
+        }
+
+        if (testPassed) {
+            std::cout << "Test Passed: testNormalizeVector" << "(" << i << ")" << "\n";
+            std::cout << "\tResult: " << Vector::normalize(testVectors[i]) << "\n";
+            std::cout << "\tExpected: " << expectedVectors[i] << "\n";
+        }
+        else {
+            std::cout << "Test Failed: testNormalizeVector" << "(" << i << ")" << "\n";
+            std::cout << "\tResult: " << Vector::normalize(testVectors[i]) << "\n";
+            std::cout << "\tExpected: " << expectedVectors[i] << "\n";
+        }
+    }
+}
+
+void testMagnitudeOfNormalizedVector() {
+    VectorData v(1, 2, 3);
+    double expectedMagnitude = 1;
+    bool testPassed = false;
+
+    double resultMagnitude = Vector::magnitude(Vector::normalize(v)); 
+
+    if(Tuple::equal(resultMagnitude, expectedMagnitude)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        std::cout << "Test Passed: testMagnitudeOfNormalizedVector\n";
+        std::cout << "\tResult: " << resultMagnitude << "\n";
+        std::cout << "\tExpected: " << expectedMagnitude << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testMagnitudeOfNormalizedVector\n";
+        std::cout << "\tResult: " << resultMagnitude << "\n";
+        std::cout << "\tExpected: " << expectedMagnitude << "\n";
+    }
+}
+
 void run_tuple_tests() {
     testTupleisPoint();
     testTupleisVector();
@@ -512,4 +576,6 @@ void run_tuple_tests() {
     testMulitplyTupleByFraction();
     testDivideTupleByScalar();
     testMagnitudesOfVectors();
+    testNormalizeVector();
+    testMagnitudeOfNormalizedVector();
 }
