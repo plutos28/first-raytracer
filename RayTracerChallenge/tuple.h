@@ -95,6 +95,24 @@ public:
         return Tuple::subtract(zero, t1);
     }
 
+    static TupleData multiply(TupleData t1, double scalar) {
+        t1.x *= scalar;
+        t1.y *= scalar;
+        t1.z *= scalar;
+        t1.w *= scalar;
+
+        return t1;
+    }
+
+    static TupleData divide(TupleData t1, double scalar) {
+        t1.x /= scalar;
+        t1.y /= scalar;
+        t1.z /= scalar;
+        t1.w /= scalar;
+
+        return t1;
+    }
+
 };
 
 class Point : public Tuple {
@@ -371,6 +389,77 @@ void testNegateTuple() {
     }
 }
 
+void testMultiplyTupleByScalar() {
+    TupleData t(1, -2, 3, -4);
+    TupleData expectedTuple(3.5, -7, 10.5, -14);
+    double scalar = 3.5;
+    bool testPassed = false;
+
+    TupleData resultTuple = Tuple::multiply(t, scalar); 
+
+    if(Tuple::equal(resultTuple, expectedTuple)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        std::cout << "Test Passed: testMultiplyTupleByScalar\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testMultiplyTupleByScalar\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+}
+
+void testMulitplyTupleByFraction() {
+    TupleData t(1, -2, 3, -4);
+    TupleData expectedTuple(0.5, -1, 1.5, -2);
+    double scalar = 0.5;
+    bool testPassed = false;
+
+    TupleData resultTuple = Tuple::multiply(t, scalar); 
+
+    if(Tuple::equal(resultTuple, expectedTuple)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        std::cout << "Test Passed: testMulitplyTupleByFraction\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testMulitplyTupleByFraction\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+}
+
+void testDivideTupleByScalar() {
+    TupleData t(1, -2, 3, -4);
+    TupleData expectedTuple(0.5, -1, 1.5, -2);
+    double scalar = 2;
+    bool testPassed = false;
+
+    TupleData resultTuple = Tuple::divide(t, scalar); 
+
+    if(Tuple::equal(resultTuple, expectedTuple)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        std::cout << "Test Passed: testDivideTupleByScalar\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+    else {
+        std::cout << "Test Failed: testDivideTupleByScalar\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+}
 
 void run_tuple_tests() {
     testTupleisPoint();
@@ -384,4 +473,7 @@ void run_tuple_tests() {
     testSubtractTwoVectors();
     testNegateVector();
     testNegateTuple();
+    testMultiplyTupleByScalar();
+    testMulitplyTupleByFraction();
+    testDivideTupleByScalar();
 }
