@@ -54,18 +54,18 @@ std::ostream& operator<<(std::ostream& s, const VectorData& t) {
 class Tuple {
 public:
     static bool isPoint(TupleData a) {
-       return Operations::Equal(a.x, 4.3) && Operations::Equal(a.y, -4.2)
-            && Operations::Equal(a.z, 3.1) && Operations::Equal(a.w, 1.0);
+       return Operations::equal(a.x, 4.3) && Operations::equal(a.y, -4.2)
+            && Operations::equal(a.z, 3.1) && Operations::equal(a.w, 1.0);
     }
 
     static bool isVector(TupleData a) {
-        return Operations::Equal(a.x, 4.3) && Operations::Equal(a.y, -4.2)
-            && Operations::Equal(a.z, 3.1) && Operations::Equal(a.w, 0.0);
+        return Operations::equal(a.x, 4.3) && Operations::equal(a.y, -4.2)
+            && Operations::equal(a.z, 3.1) && Operations::equal(a.w, 0.0);
     }
 
     static bool equal(TupleData t1, TupleData t2) {
-        return Operations::Equal(t1.x, t2.x) && Operations::Equal(t1.y, t2.y)
-            && Operations::Equal(t1.z, t2.z) && Operations::Equal(t1.w, t2.w);
+        return Operations::equal(t1.x, t2.x) && Operations::equal(t1.y, t2.y)
+            && Operations::equal(t1.z, t2.z) && Operations::equal(t1.w, t2.w);
     }
 
     static TupleData add(TupleData t1, TupleData t2) {
@@ -151,6 +151,10 @@ public:
     static VectorData negate(VectorData v1) {
         VectorData zero(0, 0, 0); 
         return Vector::subtractVector(zero, v1);
+    }
+
+    static double magnitude(VectorData v1) {
+        return sqrt(pow(v1.x, 2) + pow(v1.y, 2) + pow(v1.z, 2) + pow(v1.w, 2));
     }
 };
 
@@ -461,6 +465,37 @@ void testDivideTupleByScalar() {
     }
 }
 
+void testMagnitudesOfVectors() {
+    bool testPassed = false;
+    VectorData testVectors[] = {
+        VectorData(1, 0, 0),
+        VectorData(0, 1, 0),
+        VectorData(0, 0, 1),
+        VectorData(1, 2, 3),
+        VectorData(-1, -2, -3)
+    };
+    double expectedMagnitudes[] = {1, 1, 1, sqrt(14), sqrt(14)};
+
+    for(int i=0; i < sizeof(testVectors) / sizeof(VectorData); i++) {
+        if(Operations::equal(Vector::magnitude(testVectors[i]),expectedMagnitudes[i])) {
+            testPassed = true;
+        } else {
+            testPassed = false;
+        }
+
+        if (testPassed) {
+            std::cout << "Test Passed: testMagnitudesOfVectors" << "(" << i << ")" << "\n";
+            std::cout << "\tResult: " << Vector::magnitude(testVectors[i]) << "\n";
+            std::cout << "\tExpected: " << expectedMagnitudes[i] << "\n";
+        }
+        else {
+            std::cout << "Test Failed: testMagnitudesOfVectors" << "(" << i << ")" << "\n";
+            std::cout << "\tResult: " << Vector::magnitude(testVectors[i]) << "\n";
+            std::cout << "\tExpected: " << expectedMagnitudes[i] << "\n";
+        }
+    }
+}
+
 void run_tuple_tests() {
     testTupleisPoint();
     testTupleisVector();
@@ -476,4 +511,5 @@ void run_tuple_tests() {
     testMultiplyTupleByScalar();
     testMulitplyTupleByFraction();
     testDivideTupleByScalar();
+    testMagnitudesOfVectors();
 }

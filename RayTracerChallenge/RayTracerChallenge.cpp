@@ -1,5 +1,6 @@
 #include <iostream>
 #include <typeinfo>
+#include <cmath>
 
 #include "operations.h"
 #include "tuple.h"
