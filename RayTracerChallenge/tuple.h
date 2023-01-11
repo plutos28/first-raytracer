@@ -166,6 +166,14 @@ std::ostream& operator<<(std::ostream& s, const Point& t) {
     return s << typeid(t).name() << "(" << t.x << ", " << t.y << ", " << t.z << ", " << t.w << ")";
 }
 
+struct TestResults {
+    unsigned int passed = 0;
+    unsigned int failed = 0;
+};
+
+// keep track of the number of tests that failed and passed 
+TestResults tupleTestResults;
+
 
 void testTupleisPoint() {
     Tuple a(4.3, -4.2, 3.1, 1.0);
@@ -173,6 +181,7 @@ void testTupleisPoint() {
 
     if (a.isPoint()) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -189,6 +198,7 @@ void testTupleisVector() {
 
     if (a.isVector()) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -207,6 +217,7 @@ void testPointCreatesTupleWith1() {
 
     if (p.equal(t)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -225,6 +236,7 @@ void testVectorCreatesTupleWith0() {
 
     if (v.equal(t)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -243,6 +255,7 @@ void testTuplesEqual() {
 
     if (t1.equal(t2)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -264,6 +277,7 @@ void testAddTuples() {
 
     if(resultTuple.equal(expectedTuple)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
 
@@ -290,6 +304,7 @@ void testSubtractTwoPoints() {
 
     if(resultVector.equal(expectedVector)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -315,6 +330,7 @@ void testSubtractVectorFromPoint() {
 
     if(resultPoint.equal(expectedPoint)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -340,6 +356,7 @@ void testSubtractTwoVectors() {
 
     if(resultVector.equal(expectedVector)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -364,6 +381,7 @@ void testNegateVector() {
 
     if(resultVector.equal(expectedVector)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -388,6 +406,7 @@ void testNegateTuple() {
 
     if(resultTuple.equal(expectedTuple)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -412,6 +431,7 @@ void testMultiplyTupleByScalar() {
 
     if(resultTuple.equal(expectedTuple)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -436,6 +456,7 @@ void testMulitplyTupleByFraction() {
 
     if(resultTuple.equal(expectedTuple)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -459,6 +480,7 @@ void testDivideTupleByScalar() {
     Tuple resultTuple = t.divide(scalar); 
 
     if(resultTuple.equal(expectedTuple)) {
+        tupleTestResults.passed += 1;
         testPassed = true;
     }
 
@@ -488,6 +510,7 @@ void testMagnitudesOfVectors() {
     for(int i=0; i < sizeof(testVectors) / sizeof(Vector); i++) {
         if(Operations::equal(testVectors[i].magnitude(), expectedMagnitudes[i])) {
             testPassed = true;
+            tupleTestResults.passed += 1;
         } else {
             testPassed = false;
         }
@@ -519,6 +542,7 @@ void testNormalizeVector() {
     for(int i=0; i < sizeof(testVectors) / sizeof(Vector); i++) {
         if(testVectors[i].normalize().equal(expectedVectors[i])) {
             testPassed = true;
+            tupleTestResults.passed += 1;
         } else {
             testPassed = false;
         }
@@ -545,6 +569,7 @@ void testMagnitudeOfNormalizedVector() {
 
     if(Operations::equal(resultMagnitude, expectedMagnitude)) {
         testPassed = true;
+        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
@@ -577,4 +602,9 @@ void run_tuple_tests() {
     testMagnitudesOfVectors();
     testNormalizeVector();
     testMagnitudeOfNormalizedVector();
+
+
+    // print out the percentage that have passed 
+    unsigned int totalTests = tupleTestResults.passed + tupleTestResults.failed;
+    std::cout << "\n\n run_tuple_tests " << tupleTestResults.passed << "/" << totalTests << " Passed\n";
 }
