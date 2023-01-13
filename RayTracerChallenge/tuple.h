@@ -181,13 +181,14 @@ void testTupleisPoint() {
 
     if (a.isPoint()) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testTupleisPoint\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testTupleisPoint\n";
     }
 }
@@ -198,13 +199,14 @@ void testTupleisVector() {
 
     if (a.isVector()) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testTupleisVector\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testTupleisVector\n";
     }
 }
@@ -217,13 +219,14 @@ void testPointCreatesTupleWith1() {
 
     if (p.equal(t)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testPointCreatesTupleWith1\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testPointCreatesTupleWith1\n";
     }
 }
@@ -236,13 +239,14 @@ void testVectorCreatesTupleWith0() {
 
     if (v.equal(t)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testVectorCreatesTupleWith0\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testVectorCreatesTupleWith0\n";
     }
 }
@@ -255,13 +259,14 @@ void testTuplesEqual() {
 
     if (t1.equal(t2)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testTuplesEqual\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testTuplesEqual\n";
     }
 }
@@ -277,16 +282,16 @@ void testAddTuples() {
 
     if(resultTuple.equal(expectedTuple)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
-
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testAddTuples\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testAddTuples\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
@@ -304,15 +309,16 @@ void testSubtractTwoPoints() {
 
     if(resultVector.equal(expectedVector)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testSubtractTwoPoints\n";
         std::cout << "\tResult: " << resultVector << "\n";
         std::cout << "\tExpected: " << expectedVector << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testSubtractTwoPoints\n";
         std::cout << "\tResult: " << resultVector << "\n";
         std::cout << "\tExpected: " << expectedVector << "\n";
@@ -330,15 +336,16 @@ void testSubtractVectorFromPoint() {
 
     if(resultPoint.equal(expectedPoint)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testSubtractVectorFromPoint\n";
         std::cout << "\tResult: " << resultPoint << "\n";
         std::cout << "\tExpected: " << expectedPoint << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testSubtractVectorFromPoint\n";
         std::cout << "\tResult: " << resultPoint << "\n";
         std::cout << "\tExpected: " << expectedPoint << "\n";
@@ -356,15 +363,16 @@ void testSubtractTwoVectors() {
 
     if(resultVector.equal(expectedVector)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testSubtractTwoVectors\n";
         std::cout << "\tResult: " << resultVector << "\n";
         std::cout << "\tExpected: " << expectedVector << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testSubtractTwoVectors\n";
         std::cout << "\tResult: " << resultVector << "\n";
         std::cout << "\tExpected: " << expectedVector << "\n";
@@ -381,15 +389,16 @@ void testNegateVector() {
 
     if(resultVector.equal(expectedVector)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testNegateVector\n";
         std::cout << "\tResult: " << resultVector << "\n";
         std::cout << "\tExpected: " << expectedVector << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testNegateVector\n";
         std::cout << "\tResult: " << resultVector << "\n";
         std::cout << "\tExpected: " << expectedVector << "\n";
@@ -406,15 +415,16 @@ void testNegateTuple() {
 
     if(resultTuple.equal(expectedTuple)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testNegateTuple\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testNegateTuple\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
@@ -431,15 +441,16 @@ void testMultiplyTupleByScalar() {
 
     if(resultTuple.equal(expectedTuple)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testMultiplyTupleByScalar\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testMultiplyTupleByScalar\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
@@ -456,15 +467,16 @@ void testMulitplyTupleByFraction() {
 
     if(resultTuple.equal(expectedTuple)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testMulitplyTupleByFraction\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
     }
     else {
+        tupleTestResults.passed += 1;
         std::cout << "Test Failed: testMulitplyTupleByFraction\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
@@ -480,16 +492,17 @@ void testDivideTupleByScalar() {
     Tuple resultTuple = t.divide(scalar); 
 
     if(resultTuple.equal(expectedTuple)) {
-        tupleTestResults.passed += 1;
         testPassed = true;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testDivideTupleByScalar\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testDivideTupleByScalar\n";
         std::cout << "\tResult: " << resultTuple << "\n";
         std::cout << "\tExpected: " << expectedTuple << "\n";
@@ -510,17 +523,18 @@ void testMagnitudesOfVectors() {
     for(int i=0; i < sizeof(testVectors) / sizeof(Vector); i++) {
         if(Operations::equal(testVectors[i].magnitude(), expectedMagnitudes[i])) {
             testPassed = true;
-            tupleTestResults.passed += 1;
         } else {
             testPassed = false;
         }
 
         if (testPassed) {
+            tupleTestResults.passed += 1;
             std::cout << "Test Passed: testMagnitudesOfVectors" << "(" << i << ")" << "\n";
             std::cout << "\tResult: " << testVectors[i].magnitude() << "\n";
             std::cout << "\tExpected: " << expectedMagnitudes[i] << "\n";
         }
         else {
+            tupleTestResults.failed += 1;
             std::cout << "Test Failed: testMagnitudesOfVectors" << "(" << i << ")" << "\n";
             std::cout << "\tResult: " << testVectors[i].magnitude() << "\n";
             std::cout << "\tExpected: " << expectedMagnitudes[i] << "\n";
@@ -542,17 +556,18 @@ void testNormalizeVector() {
     for(int i=0; i < sizeof(testVectors) / sizeof(Vector); i++) {
         if(testVectors[i].normalize().equal(expectedVectors[i])) {
             testPassed = true;
-            tupleTestResults.passed += 1;
         } else {
             testPassed = false;
         }
 
         if (testPassed) {
+            tupleTestResults.passed += 1;
             std::cout << "Test Passed: testNormalizeVector" << "(" << i << ")" << "\n";
             std::cout << "\tResult: " << testVectors[i].normalize() << "\n";
             std::cout << "\tExpected: " << expectedVectors[i] << "\n";
         }
         else {
+            tupleTestResults.failed += 1;
             std::cout << "Test Failed: testNormalizeVector" << "(" << i << ")" << "\n";
             std::cout << "\tResult: " << testVectors[i].normalize() << "\n";
             std::cout << "\tExpected: " << expectedVectors[i] << "\n";
@@ -569,15 +584,16 @@ void testMagnitudeOfNormalizedVector() {
 
     if(Operations::equal(resultMagnitude, expectedMagnitude)) {
         testPassed = true;
-        tupleTestResults.passed += 1;
     }
 
     if (testPassed) {
+        tupleTestResults.passed += 1;
         std::cout << "Test Passed: testMagnitudeOfNormalizedVector\n";
         std::cout << "\tResult: " << resultMagnitude << "\n";
         std::cout << "\tExpected: " << expectedMagnitude << "\n";
     }
     else {
+        tupleTestResults.failed += 1;
         std::cout << "Test Failed: testMagnitudeOfNormalizedVector\n";
         std::cout << "\tResult: " << resultMagnitude << "\n";
         std::cout << "\tExpected: " << expectedMagnitude << "\n";
