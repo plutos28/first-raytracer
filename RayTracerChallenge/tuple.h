@@ -622,41 +622,41 @@ void testDotProductOfTwoTuples() {
 
     if (testPassed) {
         tupleTestResults.passed += 1;
-        std::cout << "Test Passed: testMulitplyTupleByFraction\n";
+        std::cout << "Test Passed: testDotProductOfTwoTuples\n";
         std::cout << "\tResult: " << resultDotProduct << "\n";
         std::cout << "\tExpected: " << expectedDotProduct << "\n";
     }
     else {
         tupleTestResults.passed += 1;
-        std::cout << "Test Failed: testMulitplyTupleByFraction\n";
+        std::cout << "Test Failed: testDotProductOfTwoTuples\n";
         std::cout << "\tResult: " << resultDotProduct << "\n";
         std::cout << "\tExpected: " << expectedDotProduct << "\n";
     }
 }
 
 void testDotProductOfTwoVectors() {
-    Tuple t(1, -2, 3, -4);
-    Tuple expectedTuple(0.5, -1, 1.5, -2);
-    double scalar = 0.5;
+    Vector v1(1, 2, 3);
+    Vector v2(2, 3, 4);
+    double expectedDotProduct = 20;
     bool testPassed = false;
 
-    Tuple resultTuple = t.multiply(scalar);
+    double resultDotProduct = dot(v1, v2);
 
-    if (resultTuple.equal(expectedTuple)) {
+    if (Operations::equal(expectedDotProduct, resultDotProduct)) {
         testPassed = true;
     }
 
     if (testPassed) {
         tupleTestResults.passed += 1;
-        std::cout << "Test Passed: testMulitplyTupleByFraction\n";
-        std::cout << "\tResult: " << resultTuple << "\n";
-        std::cout << "\tExpected: " << expectedTuple << "\n";
+        std::cout << "Test Passed: testDotProductOfTwoVectors\n";
+        std::cout << "\tResult: " << resultDotProduct << "\n";
+        std::cout << "\tExpected: " << expectedDotProduct << "\n";
     }
     else {
         tupleTestResults.passed += 1;
-        std::cout << "Test Failed: testMulitplyTupleByFraction\n";
-        std::cout << "\tResult: " << resultTuple << "\n";
-        std::cout << "\tExpected: " << expectedTuple << "\n";
+        std::cout << "Test Failed: testDotProductOfTwoVectors\n";
+        std::cout << "\tResult: " << resultDotProduct << "\n";
+        std::cout << "\tExpected: " << expectedDotProduct << "\n";
     }
 }
 
@@ -679,7 +679,7 @@ void run_tuple_tests() {
     testNormalizeVector();
     testMagnitudeOfNormalizedVector();
     testDotProductOfTwoTuples();
-    //testDotProductOfTwoVectors();
+    testDotProductOfTwoVectors();
 
 
     // print out the percentage that have passed 
