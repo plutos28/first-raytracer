@@ -174,6 +174,14 @@ struct TestResults {
 // keep track of the number of tests that failed and passed 
 TestResults tupleTestResults;
 
+// freestanding dot product function, i think it's fine for now, but I do think
+// it should be namespaced under vector as it's as it's a expected vector function
+double dot(Tuple t1, Tuple t2) {
+    return t1.x * t2.x +
+        t1.y * t2.y +
+        t1.z * t2.z +
+        t1.w * t2.w;
+}
 
 void testTupleisPoint() {
     Tuple a(4.3, -4.2, 3.1, 1.0);
@@ -600,6 +608,58 @@ void testMagnitudeOfNormalizedVector() {
     }
 }
 
+void testDotProductOfTwoTuples() {
+    Tuple t1(1, 2, 3, 0);
+    Tuple t2(2, 3, 4, 0);
+    double expectedDotProduct = 20;
+    bool testPassed = false;
+
+    double resultDotProduct = dot(t1, t2);
+
+    if (Operations::equal(expectedDotProduct, resultDotProduct)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        tupleTestResults.passed += 1;
+        std::cout << "Test Passed: testMulitplyTupleByFraction\n";
+        std::cout << "\tResult: " << resultDotProduct << "\n";
+        std::cout << "\tExpected: " << expectedDotProduct << "\n";
+    }
+    else {
+        tupleTestResults.passed += 1;
+        std::cout << "Test Failed: testMulitplyTupleByFraction\n";
+        std::cout << "\tResult: " << resultDotProduct << "\n";
+        std::cout << "\tExpected: " << expectedDotProduct << "\n";
+    }
+}
+
+void testDotProductOfTwoVectors() {
+    Tuple t(1, -2, 3, -4);
+    Tuple expectedTuple(0.5, -1, 1.5, -2);
+    double scalar = 0.5;
+    bool testPassed = false;
+
+    Tuple resultTuple = t.multiply(scalar);
+
+    if (resultTuple.equal(expectedTuple)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        tupleTestResults.passed += 1;
+        std::cout << "Test Passed: testMulitplyTupleByFraction\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+    else {
+        tupleTestResults.passed += 1;
+        std::cout << "Test Failed: testMulitplyTupleByFraction\n";
+        std::cout << "\tResult: " << resultTuple << "\n";
+        std::cout << "\tExpected: " << expectedTuple << "\n";
+    }
+}
+
 void run_tuple_tests() {
     testTupleisPoint();
     testTupleisVector();
@@ -618,6 +678,8 @@ void run_tuple_tests() {
     testMagnitudesOfVectors();
     testNormalizeVector();
     testMagnitudeOfNormalizedVector();
+    testDotProductOfTwoTuples();
+    //testDotProductOfTwoVectors();
 
 
     // print out the percentage that have passed 
