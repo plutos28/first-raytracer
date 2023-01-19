@@ -174,13 +174,20 @@ struct TestResults {
 // keep track of the number of tests that failed and passed 
 TestResults tupleTestResults;
 
-// freestanding dot product function, i think it's fine for now, but I do think
-// it should be namespaced under vector as it's as it's a expected vector function
+// freestanding dot and cross product functions, i think it's fine for now, but I do think
+// they should be namespaced under vector as they're expected to be used with vectors
 double dot(Tuple t1, Tuple t2) {
     return t1.x * t2.x +
         t1.y * t2.y +
         t1.z * t2.z +
         t1.w * t2.w;
+}
+
+// This deals with vectors not tuples as 3d cross product is much different than 4d cross product
+// and we only need the 3d cross product anyway, note that when using the cross product, the 
+// order of the items matters to the end result so be careful
+double cross(Vector v1, Vector v2) {
+    
 }
 
 void testTupleisPoint() {
@@ -660,6 +667,34 @@ void testDotProductOfTwoVectors() {
     }
 }
 
+void testCrossProductOfTwoVectors() {
+    Vector v1(1, 2, 3);
+    Vector v2(2, 3, 4);
+    Vector expectedVector1(-1, 2, -1);
+    Vector expectedVector2(1, -2, 1);
+    bool testPassed = false;
+
+    Vector resultVector1 = cross(v1, v2);
+    Vector resultVector2 = cross(v2, v1);
+
+    if (Operations::equal(expectedDotProduct, resultDotProduct)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        tupleTestResults.passed += 1;
+        std::cout << "Test Passed: testCrossProductOfTwoVectors\n";
+        std::cout << "\tResult: " << resultDotProduct << "\n";
+        std::cout << "\tExpected: " << expectedDotProduct << "\n";
+    }
+    else {
+        tupleTestResults.passed += 1;
+        std::cout << "Test Failed: testCrossProductOfTwoVectors\n";
+        std::cout << "\tResult: " << resultDotProduct << "\n";
+        std::cout << "\tExpected: " << expectedDotProduct << "\n";
+    }
+}
+
 void run_tuple_tests() {
     testTupleisPoint();
     testTupleisVector();
@@ -680,6 +715,7 @@ void run_tuple_tests() {
     testMagnitudeOfNormalizedVector();
     testDotProductOfTwoTuples();
     testDotProductOfTwoVectors();
+    testCrossProductOfTwoVectors();
 
 
     // print out the percentage that have passed 
