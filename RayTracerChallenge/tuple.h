@@ -186,8 +186,10 @@ double dot(Tuple t1, Tuple t2) {
 // This deals with vectors not tuples as 3d cross product is much different than 4d cross product
 // and we only need the 3d cross product anyway, note that when using the cross product, the 
 // order of the items matters to the end result so be careful
-double cross(Vector v1, Vector v2) {
-    
+Vector cross(Vector v1, Vector v2) {
+    return Vector(v1.y * v2.z - v1.z * v2.y,
+                  v1.z * v2.x - v1.x * v2.z,
+                  v1.x * v2.y - v1.y * v2.x);
 }
 
 void testTupleisPoint() {
@@ -677,21 +679,25 @@ void testCrossProductOfTwoVectors() {
     Vector resultVector1 = cross(v1, v2);
     Vector resultVector2 = cross(v2, v1);
 
-    if (Operations::equal(expectedDotProduct, resultDotProduct)) {
+    if (resultVector1.equal(expectedVector1) && 
+        resultVector2.equal(expectedVector2)) {
         testPassed = true;
     }
 
     if (testPassed) {
         tupleTestResults.passed += 1;
         std::cout << "Test Passed: testCrossProductOfTwoVectors\n";
-        std::cout << "\tResult: " << resultDotProduct << "\n";
-        std::cout << "\tExpected: " << expectedDotProduct << "\n";
+        std::cout << "\tResult1: " << resultVector1 << "\n";
+        std::cout << "\tResult2: " << resultVector2 << "\n";
+        std::cout << "\tExpected1: " << expectedVector1 << "\n";
+        std::cout << "\tExpected2: " << expectedVector2 << "\n";
     }
     else {
         tupleTestResults.passed += 1;
-        std::cout << "Test Failed: testCrossProductOfTwoVectors\n";
-        std::cout << "\tResult: " << resultDotProduct << "\n";
-        std::cout << "\tExpected: " << expectedDotProduct << "\n";
+        std::cout << "\tResult1: " << resultVector1 << "\n";
+        std::cout << "\tResult2: " << resultVector2 << "\n";
+        std::cout << "\tExpected1: " << expectedVector1 << "\n";
+        std::cout << "\tExpected2: " << expectedVector2 << "\n";
     }
 }
 
