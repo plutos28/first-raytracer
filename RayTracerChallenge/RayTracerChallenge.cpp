@@ -48,13 +48,18 @@ int main()
     // Run all the tests
     run_tests();
 
-    // Canvas c(10, 20);
+    Canvas c(5, 5);
+    c.writePixel(0, 0, Color(1, 1, 1));
+    c.writePixel(1, 2, Color(1, 1, 1));
+    c.writePixel(2, 0, Color(1, 1, 1));
+    c.writePixel(3, 1, Color(1, 1, 1));
 
-    // for (int i = 0; i < c.width; i++) {
-    //     for (int j = 0; j < c.height; j++) {
-    //         std::cout << *(c.pixels + i * c.height + j) << "\n";
-    //     }
-    // }
+    for (int i = 0; i < c.height; i++) { // row(i)
+        for (int j = 0; j < c.width; j++) { // column(j)
+            std::cout << *(c.pixels + j + (c.height * i)) << ", ";
+        }
+        std::cout << "\n";
+    }
 
     return 0;
 }

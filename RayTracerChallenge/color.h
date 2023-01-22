@@ -42,7 +42,7 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& s, const Color& c) {
-    return s << typeid(c).name() << "(red: " << c.red << ", " << " green: " << c.green << ", " << " blue: " << c.blue << ")";
+    return s << "(r: " << c.red << ", " << "g: " << c.green << ", " << "b: " << c.blue << ")";
 }
 
 TestResults colorTestResults;

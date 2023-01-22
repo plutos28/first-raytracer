@@ -20,11 +20,15 @@ public:
     }
 
     void writePixel(size_t x, size_t y, Color color) {
-        *(pixels + x * height + y) = color;
+        // To write to a pixel, we have to get the right address in the memory block pixels which is a long line sized
+        // width * height and contains Color objects at each address pixels points to Color* so we have to deference to change value
+        // to get to the right address, we first add x to pixels to get the right x location then we have to multiply height*y to get the
+        // right row which then we add to pixels+x to get the correct address
+        *(pixels + x + (height*y)) = color;
     }
 
-    Color pixelAt(size_t x, size_t y) {
-        return Color(0, 0, 0);
+    Color readPixel(size_t x, size_t y) {
+        return *(pixels + x + (height*y));
     }
 
     ~Canvas() {
@@ -81,7 +85,7 @@ void testWritePixel() {
 
     c.writePixel(2, 3, red);
 
-    if (c.pixelAt(2, 3).equal(red)) {
+    if (c.readPixel(2, 3).equal(red)) {
         testPassed = true;
     }
 
