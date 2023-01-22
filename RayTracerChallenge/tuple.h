@@ -187,7 +187,7 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& s, const Point& t) {
-    return s << typeid(t).name() << "(" << t.x << ", " << t.y << ", " << t.z << ", " << t.w << ")";
+    return s << typeid(t).name() << "(" << t.x << "," << t.y << "," << t.z << "," << t.w << ")";
 }
 
 struct TestResults {

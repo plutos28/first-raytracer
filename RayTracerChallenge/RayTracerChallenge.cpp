@@ -4,6 +4,7 @@
 
 #include "operations.h"
 #include "tuple.h"
+#include "color.h"
 
 void run_tests();
 
@@ -44,13 +45,14 @@ int main()
     }
 
     // Run all the tests
-    //run_tests();
+    run_tests();
 
     return 0;
 }
 
 void run_tests() {
     run_tuple_tests();
+    run_color_tests();
 }
 
 Projectile tick(Environment environment, Projectile projectile) {
