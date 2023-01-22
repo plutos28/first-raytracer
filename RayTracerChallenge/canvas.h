@@ -42,7 +42,24 @@ std::ostream& operator<<(std::ostream& s, const Canvas& c) {
     return s << typeid(c).name() << "(width: " << c.width << ", " << "height: " << c.height << ")";
 }
 
+class PPM {
+public:
+    std::string content;
+    PPM(size_t w, size_t h) {
+        // Add PPM Header
+        std::string line1 = "P3\n";
+        std::string line2 = std::to_string(w) + " " + std::to_string(h) + "\n";
+        std::string line3 = "255\n";
+
+        content = line1 + line2 + line3;
+    }
+};
+
 TestResults canvasTestResults;
+
+PPM CanvasToPPM(Canvas& c) {
+    return PPM(c.width, c.height);
+}
 
 void testCanvasCreation() {
     Canvas c(10, 20);
@@ -99,9 +116,34 @@ void testWritePixel() {
     }
 }
 
+void testConstructingPPMHeader() {
+    Canvas c(5, 3);
+    PPM p = CanvasToPPM(c);
+    std::string expectedContent = 
+        "P3\n"
+        "5 3\n"
+        "255\n";
+
+    bool testPassed = false;
+
+    if (p.content == expectedContent) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        canvasTestResults.passed += 1;
+        std::cout << "Test Passed: testConstructingPPMHeader\n";
+    }
+    else {
+        canvasTestResults.failed += 1;
+        std::cout << "Test Failed: testConstructingPPMHeader\n";
+    }
+}
+
 void run_canvas_tests() {
     testCanvasCreation();
     testWritePixel();
+    testConstructingPPMHeader();
 
     // print out the percentage that have passed 
     unsigned int totalTests = canvasTestResults.passed + canvasTestResults.failed;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <cmath>
+#include <string>
 
 #include "operations.h"
 #include "tuple.h"
@@ -60,6 +61,10 @@ int main()
         }
         std::cout << "\n";
     }
+
+    Canvas new_c = Canvas(1000, 100);
+    PPM p2 = CanvasToPPM(new_c);
+    std::cout << "\n\n" << p2.content << "\n";
 
     return 0;
 }
