@@ -20,11 +20,11 @@ public:
     }
 
     void writePixel(size_t x, size_t y, Color color) {
-        *(pixels + x * height + y) = color;
+        pixels[height*y+x] = color;
     }
 
     Color pixelAt(size_t x, size_t y) {
-        return Color(0, 0, 0);
+        return pixels[height * y + x];
     }
 
     ~Canvas() {
