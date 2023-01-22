@@ -94,6 +94,18 @@ public:
         w = 0.0;
     }
 
+    Vector add(Vector v2) {
+        // Currently doesn't modify the tuple, just returns a new tuple
+        Vector result(x, y, z);
+
+        result.x += v2.x;
+        result.y += v2.y;
+        result.z += v2.z;
+        result.w += v2.w;
+
+        return result;
+    }
+
     Vector subtract(Vector v2) {
         Vector result(x, y, z);
 
@@ -139,6 +151,18 @@ public:
         y = y1;
         z = z1;
         w = 1.0;
+    }
+
+    Point add(Vector v2) {
+        // Currently doesn't modify the tuple, just returns a new tuple
+        Point result(x, y, z);
+
+        result.x += v2.x;
+        result.y += v2.y;
+        result.z += v2.z;
+        result.w += v2.w;
+
+        return result;
     }
 
     Vector subtract(Point p2) {
