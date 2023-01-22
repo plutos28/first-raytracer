@@ -48,39 +48,13 @@ int main()
     // Run all the tests
     run_tests();
 
-    // std::cout << "\n\nColor Pixels\n\n";
-    // const int w = 2;
-    // const int h = 2;
-    // Color pixels[w][h] = {
-    //     {Color(0, 0, 0), Color(0, 0, 0)},
-    //     {Color(0, 0, 0), Color(0, 0, 0)}
-    // };
+    // Canvas c(10, 20);
 
-    // for (int i = 0; i < w; i++) {
-    //     std::cout << "[";
-    //     for (int j = 0; j < h; j++) {
-    //         std::cout << pixels[i][j] << ", ";
+    // for (int i = 0; i < c.width; i++) {
+    //     for (int j = 0; j < c.height; j++) {
+    //         std::cout << *(c.pixels + i * c.height + j) << "\n";
     //     }
-    //     std::cout << "]\n";
     // }
-
-    int w = 10;
-    int h = 20;
-    Color* pixels = new Color[w * h];
-
-    for (int i = 0; i < w; i++) {
-        for (int j = 0; j < h; j++) {
-            *(pixels + i * h + j) = Color(0, 0, 0);
-        }
-    }
-
-    for (int i = 0; i < w; i++) {
-        for (int j = 0; j < h; j++) {
-            std::cout << *(pixels + i * h + j) << "\n";
-        }
-    }
-
-    delete[] pixels;
 
     return 0;
 }
