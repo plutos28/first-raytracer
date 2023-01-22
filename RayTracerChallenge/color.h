@@ -28,6 +28,11 @@ public:
     Color multiply(double scalar) {
         return Color(red * scalar, green * scalar, blue * scalar);
     }
+
+    Color multiply(Color c2) {
+        // Hadamard product -> blending two colors
+        return Color(red * c2.red, green * c2.green, blue * c2.blue);
+    }
 };
 
 std::ostream& operator<<(std::ostream& s, const Color& c) {
@@ -114,10 +119,37 @@ void testMultiplyColorByScalar() {
     }
 }
 
+void testMultiplyColorByColor() {
+    Color c1(1, 0.2, 0.4); 
+    Color c2(0.9, 1, 0.1);
+    Color expectedColor(0.9, 0.2, 0.04);
+    bool testPassed = false;
+
+    Color resultColor = c1.multiply(c2);
+
+    if(resultColor.equal(expectedColor)) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        colorTestResults.passed += 1;
+        std::cout << "Test Passed: testMultiplyColorByColor\n";
+        std::cout << "\tResult: " << resultColor << "\n";
+        std::cout << "\tExpected: " << expectedColor << "\n";
+    }
+    else {
+        colorTestResults.failed += 1;
+        std::cout << "Test Failed: testMultiplyColorByColor\n";
+        std::cout << "\tResult: " << resultColor << "\n";
+        std::cout << "\tExpected: " << expectedColor << "\n";
+    }
+}
+
 void run_color_tests() {
     testAddColors();
     testSubtractColors();
     testMultiplyColorByScalar();
+    testMultiplyColorByColor();
 
     // print out the percentage that have passed 
     unsigned int totalTests = colorTestResults.passed + colorTestResults.failed;
