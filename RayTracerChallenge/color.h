@@ -6,6 +6,12 @@ public:
     double green;
     double blue;
 
+    Color() {
+        red = 0;
+        green = 0;
+        blue = 0;
+    }
+
     Color(double r, double g, double b) {
         red = r;
         green = g;
@@ -153,5 +159,5 @@ void run_color_tests() {
 
     // print out the percentage that have passed 
     unsigned int totalTests = colorTestResults.passed + colorTestResults.failed;
-    std::cout << "\n\n run_color_tests " << colorTestResults.passed << "/" << totalTests << " Passed\n";
+    std::cout << "\n\n run_color_tests " << colorTestResults.passed << "/" << totalTests << " Passed\n\n";
 }
