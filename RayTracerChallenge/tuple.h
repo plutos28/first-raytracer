@@ -750,5 +750,5 @@ void run_tuple_tests() {
 
     // print out the percentage that have passed 
     unsigned int totalTests = tupleTestResults.passed + tupleTestResults.failed;
-    std::cout << "\n\n run_tuple_tests " << tupleTestResults.passed << "/" << totalTests << " Passed\n";
+    std::cout << "\n\n run_tuple_tests " << tupleTestResults.passed << "/" << totalTests << " Passed\n\n";
 }
