@@ -20,11 +20,15 @@ public:
     }
 
     void writePixel(size_t x, size_t y, Color color) {
-        pixels[height*y+x] = color;
+        // To write to a pixel, we have to get the right address in the memory block pixels which is a long line sized
+        // width * height and contains Color objects at each address pixels points to Color* so we have to deference to change value
+        // to get to the right address, we first add x to pixels to get the right x location then we have to multiply height*y to get the
+        // right row which then we add to pixels+x to get the correct address
+        *(pixels + x + (height*y)) = color;
     }
 
-    Color pixelAt(size_t x, size_t y) {
-        return pixels[height * y + x];
+    Color readPixel(size_t x, size_t y) {
+        return *(pixels + x + (height*y));
     }
 
     ~Canvas() {
@@ -38,7 +42,24 @@ std::ostream& operator<<(std::ostream& s, const Canvas& c) {
     return s << typeid(c).name() << "(width: " << c.width << ", " << "height: " << c.height << ")";
 }
 
+class PPM {
+public:
+    std::string content;
+    PPM(size_t w, size_t h) {
+        // Add PPM Header
+        std::string line1 = "P3\n";
+        std::string line2 = std::to_string(w) + " " + std::to_string(h) + "\n";
+        std::string line3 = "255\n";
+
+        content = line1 + line2 + line3;
+    }
+};
+
 TestResults canvasTestResults;
+
+PPM CanvasToPPM(Canvas& c) {
+    return PPM(c.width, c.height);
+}
 
 void testCanvasCreation() {
     Canvas c(10, 20);
@@ -81,7 +102,7 @@ void testWritePixel() {
 
     c.writePixel(2, 3, red);
 
-    if (c.pixelAt(2, 3).equal(red)) {
+    if (c.readPixel(2, 3).equal(red)) {
         testPassed = true;
     }
 
@@ -95,9 +116,34 @@ void testWritePixel() {
     }
 }
 
+void testConstructingPPMHeader() {
+    Canvas c(5, 3);
+    PPM p = CanvasToPPM(c);
+    std::string expectedContent = 
+        "P3\n"
+        "5 3\n"
+        "255\n";
+
+    bool testPassed = false;
+
+    if (p.content == expectedContent) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        canvasTestResults.passed += 1;
+        std::cout << "Test Passed: testConstructingPPMHeader\n";
+    }
+    else {
+        canvasTestResults.failed += 1;
+        std::cout << "Test Failed: testConstructingPPMHeader\n";
+    }
+}
+
 void run_canvas_tests() {
     testCanvasCreation();
     testWritePixel();
+    testConstructingPPMHeader();
 
     // print out the percentage that have passed 
     unsigned int totalTests = canvasTestResults.passed + canvasTestResults.failed;
