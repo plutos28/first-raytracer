@@ -45,13 +45,17 @@ std::ostream& operator<<(std::ostream& s, const Canvas& c) {
 class PPM {
 public:
     std::string content;
+    std::string headerContent;
+    std::string pixelContent;
     PPM(size_t w, size_t h) {
         // Add PPM Header
         std::string line1 = "P3\n";
         std::string line2 = std::to_string(w) + " " + std::to_string(h) + "\n";
         std::string line3 = "255\n";
 
-        content = line1 + line2 + line3;
+        headerContent = line1 + line2 + line3;
+
+        content += headerContent;
     }
 };
 
@@ -61,18 +65,16 @@ PPM CanvasToPPM(Canvas& c) {
     PPM p(c.width, c.height);
     int max_colors = 256;
 
-    // traverse array and convert each line of canvas onto ppm
-    // for (int i = 0; i < c.height; i++) {
-    //     std::string current_line = "";
-    //     for (int j = 0; j < c.width; j++) {
-    //         Color* current_color = (c.pixels + i * c.height + j);
-    //         std::string current_color_ppm = std::to_string(current_color->red*max_colors) + " " 
-    //             + std::to_string(current_color->green*max_colors) + " " + std::to_string(current_color->blue*max_colors);
-    //         current_line += current_color_ppm;
-    //     }
-    //     current_line += "\n";
-    //     p.content += current_line;
-    // }
+    for (int i = 0; i < c.height; i++) { // row(i)
+        for (int j = 0; j < c.width; j++) { // column(j)
+            Color* current_color = (c.pixels + j + (c.height * i));
+            p.pixelContent += current_color->toPPM() + " ";
+            
+        }
+        p.pixelContent.pop_back(); // remove an extra epace at the end as we add spaces after each color value
+        p.pixelContent += "\n";
+    }
+    p.content += p.pixelContent;
 
     return p;
 }
@@ -142,7 +144,7 @@ void testConstructingPPMHeader() {
 
     bool testPassed = false;
 
-    if (p.content == expectedContent) {
+    if (p.headerContent == expectedContent) {
         testPassed = true;
     }
 
@@ -164,7 +166,7 @@ void testConstructingPPMPixelData() {
 
     c.writePixel(0, 0, c1);
     c.writePixel(2, 1, c2);
-    c.writePixel(3, 2, c3);
+    c.writePixel(4, 2, c3);
     PPM p = CanvasToPPM(c);
 
     std::string expectedContent = 
@@ -174,7 +176,7 @@ void testConstructingPPMPixelData() {
 
     bool testPassed = false;
 
-    if (p.content == expectedContent) {
+    if (p.pixelContent == expectedContent) {
         testPassed = true;
     }
 
