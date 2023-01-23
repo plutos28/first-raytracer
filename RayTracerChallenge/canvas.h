@@ -31,6 +31,15 @@ public:
         return *(pixels + x + (height*y));
     }
 
+    void setBackgroundColor(Color c) {
+        // traverse array and set every pixel to color c
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                *(pixels + i * height + j) = c;
+            }
+        }
+    }
+
     ~Canvas() {
         // destructor called when object goves out of scope
         // we want to free the pixels dynamic array
@@ -64,11 +73,28 @@ TestResults canvasTestResults;
 PPM CanvasToPPM(Canvas& c) {
     PPM p(c.width, c.height);
     int max_colors = 256;
+    size_t max_line_length = 70;
 
     for (int i = 0; i < c.height; i++) { // row(i)
         for (int j = 0; j < c.width; j++) { // column(j)
+            // we need to make sure that lines are not longer than 70 characters, for now I'll only do the check once
+            // and then split the lines into two, but in the future I think it'll be necessary to split it multiple times
+            // if the width of the canvas is very large
+            // Splitting doesn't happen exactly at 70 characters but should instead happen when 
+            // the current line plus the new color values are greater than 70 than we have to split so that 
+            // that next color goes over to the next line
             Color* current_color = (c.pixels + j + (c.height * i));
-            p.pixelContent += current_color->toPPM() + " ";
+
+            // we can't just multiply by max_line_length, we also need to move the substring who's size we're considering
+            // hack: for now just multiply the max_line_length by the row number(i)
+            // potentially better: would be using different substrings as we move along
+            if (p.pixelContent.size() + (current_color->toPPM() + " ").size() > max_line_length*(i+1)) {
+                p.pixelContent += "\n";
+                p.pixelContent += current_color->toPPM() + " ";
+            }
+            else {
+                p.pixelContent += current_color->toPPM() + " ";
+            }
             
         }
         p.pixelContent.pop_back(); // remove an extra epace at the end as we add spaces after each color value
@@ -190,12 +216,40 @@ void testConstructingPPMPixelData() {
     }
 }
 
+void testSplittingLongLinesInPPM() {
+    Canvas c(10, 2);
+    c.setBackgroundColor(Color(1, 0.8, 0.6));
+    PPM p = CanvasToPPM(c);
+
+    std::string expectedContent = 
+        "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n"
+        "153 255 204 153 255 204 153 255 204 153 255 204 153\n"
+        "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n"
+        "153 255 204 153 255 204 153 255 204 153 255 204 153\n";
+
+    bool testPassed = false;
+
+    if (p.pixelContent == expectedContent) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        canvasTestResults.passed += 1;
+        std::cout << "Test Passed: testSplittingLongLinesInPPM\n";
+    }
+    else {
+        canvasTestResults.failed += 1;
+        std::cout << "Test Failed: testSplittingLongLinesInPPM\n";
+    }
+}
+
 
 void run_canvas_tests() {
     testCanvasCreation();
     testWritePixel();
     testConstructingPPMHeader();
     testConstructingPPMPixelData();
+    testSplittingLongLinesInPPM();
 
     // print out the percentage that have passed 
     unsigned int totalTests = canvasTestResults.passed + canvasTestResults.failed;
