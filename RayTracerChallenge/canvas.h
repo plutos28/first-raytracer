@@ -58,7 +58,23 @@ public:
 TestResults canvasTestResults;
 
 PPM CanvasToPPM(Canvas& c) {
-    return PPM(c.width, c.height);
+    PPM p(c.width, c.height);
+    int max_colors = 256;
+
+    // traverse array and convert each line of canvas onto ppm
+    // for (int i = 0; i < c.height; i++) {
+    //     std::string current_line = "";
+    //     for (int j = 0; j < c.width; j++) {
+    //         Color* current_color = (c.pixels + i * c.height + j);
+    //         std::string current_color_ppm = std::to_string(current_color->red*max_colors) + " " 
+    //             + std::to_string(current_color->green*max_colors) + " " + std::to_string(current_color->blue*max_colors);
+    //         current_line += current_color_ppm;
+    //     }
+    //     current_line += "\n";
+    //     p.content += current_line;
+    // }
+
+    return p;
 }
 
 void testCanvasCreation() {
@@ -140,10 +156,44 @@ void testConstructingPPMHeader() {
     }
 }
 
+void testConstructingPPMPixelData() {
+    Canvas c(5, 3);
+    Color c1(1.5, 0, 0);
+    Color c2(0, 0.5, 0);
+    Color c3(-0.5, 0, 1);
+
+    c.writePixel(0, 0, c1);
+    c.writePixel(2, 1, c2);
+    c.writePixel(3, 2, c3);
+    PPM p = CanvasToPPM(c);
+
+    std::string expectedContent = 
+        "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n"
+        "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n"
+        "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n";
+
+    bool testPassed = false;
+
+    if (p.content == expectedContent) {
+        testPassed = true;
+    }
+
+    if (testPassed) {
+        canvasTestResults.passed += 1;
+        std::cout << "Test Passed: testConstructingPPMPixelData\n";
+    }
+    else {
+        canvasTestResults.failed += 1;
+        std::cout << "Test Failed: testConstructingPPMPixelData\n";
+    }
+}
+
+
 void run_canvas_tests() {
     testCanvasCreation();
     testWritePixel();
     testConstructingPPMHeader();
+    testConstructingPPMPixelData();
 
     // print out the percentage that have passed 
     unsigned int totalTests = canvasTestResults.passed + canvasTestResults.failed;

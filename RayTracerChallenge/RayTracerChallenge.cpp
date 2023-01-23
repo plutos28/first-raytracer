@@ -38,33 +38,36 @@ int main()
 {
     // firing virtual projectiles
     std::cout << "***** Firing Projectiles *****\n";
-    Projectile p(Point(0, 1, 0), Vector(1, 1, 0).normalize());
+    Projectile proj(Point(0, 1, 0), Vector(1, 1, 0).normalize());
     Environment e(Vector(0, -0.1, 0), Vector(-0.01, 0, 0));
 
-    while (p.position.y > 0) {
-        p = tick(e, p);
-        std::cout << "(x: " << p.position.x << ", y: " << p.position.y << ")\n";
+    while (proj.position.y > 0) {
+        proj = tick(e, proj);
+        std::cout << "(x: " << proj.position.x << ", y: " << proj.position.y << ")\n";
     }
 
     // Run all the tests
     run_tests();
 
-    Canvas c(5, 5);
-    c.writePixel(0, 0, Color(1, 1, 1));
-    c.writePixel(1, 2, Color(1, 1, 1));
-    c.writePixel(2, 0, Color(1, 1, 1));
-    c.writePixel(3, 1, Color(1, 1, 1));
+    Canvas c(5, 3);
+    Color c1(1.5, 0, 0);
+    Color c2(0, 0.5, 0);
+    Color c3(-0.5, 0, 1);
+
+    c.writePixel(0, 0, c1);
+    c.writePixel(2, 1, c2);
+    c.writePixel(3, 2, c3);
+    PPM p = CanvasToPPM(c);
 
     for (int i = 0; i < c.height; i++) { // row(i)
         for (int j = 0; j < c.width; j++) { // column(j)
-            std::cout << *(c.pixels + j + (c.height * i)) << ", ";
+            Color* current_color = (c.pixels + j + (c.height * i));
+            std::cout << current_color->toPPM() << ", ";
         }
         std::cout << "\n";
     }
 
-    Canvas new_c = Canvas(1000, 100);
-    PPM p2 = CanvasToPPM(new_c);
-    std::cout << "\n\n" << p2.content << "\n";
+    std::cout << "\n\n" << p.content << "\n";
 
     return 0;
 }
