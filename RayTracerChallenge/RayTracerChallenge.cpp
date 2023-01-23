@@ -56,15 +56,15 @@ int main()
 
     c.writePixel(0, 0, c1);
     c.writePixel(2, 1, c2);
-    c.writePixel(3, 2, c3);
+    c.writePixel(4, 2, c3);
     PPM p = CanvasToPPM(c);
 
     for (int i = 0; i < c.height; i++) { // row(i)
         for (int j = 0; j < c.width; j++) { // column(j)
             Color* current_color = (c.pixels + j + (c.height * i));
-            std::cout << current_color->toPPM() << ", ";
+            p.content += current_color->toPPM() + " ";
         }
-        std::cout << "\n";
+        p.content += "\n";
     }
 
     std::cout << "\n\n" << p.content << "\n";

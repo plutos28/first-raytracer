@@ -44,17 +44,17 @@ public:
 
     std::string toPPM() {
         // check that colors don't exceed maxColors-1
-        double new_red = (red * MAX_COLORS > MAX_COLORS) ? MAX_COLORS-1 : red * MAX_COLORS;
-        double new_green = (green * MAX_COLORS > MAX_COLORS) ? MAX_COLORS-1 : green * MAX_COLORS;
-        double new_blue = (blue * MAX_COLORS > MAX_COLORS) ? MAX_COLORS-1 : blue * MAX_COLORS;
+        double new_red = (red * MAX_COLORS >= MAX_COLORS) ? MAX_COLORS-1 : red * MAX_COLORS;
+        double new_green = (green * MAX_COLORS >= MAX_COLORS) ? MAX_COLORS-1 : green * MAX_COLORS;
+        double new_blue = (blue * MAX_COLORS >= MAX_COLORS) ? MAX_COLORS-1 : blue * MAX_COLORS;
 
         // check that negative values will be set to 0
         new_red = (new_red < 0) ? 0 : new_red;
         new_green = (new_green < 0) ? 0 : new_green;
         new_blue = (new_blue < 0) ? 0 : new_blue;
 
-        return std::to_string(new_red) + " "
-            + std::to_string(new_green) + " " + std::to_string(new_blue);
+        return std::to_string((int) new_red) + " "
+            + std::to_string((int) new_green) + " " + std::to_string((int) new_blue);
     }
 };
 
